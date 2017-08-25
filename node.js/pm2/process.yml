@@ -1,0 +1,14 @@
+
+apps:
+  - script   : server.js
+    watch  : true # 开启watcher，文件更改，自动重启
+    ignore_watch:
+      - node_modules
+    env    :
+      NODE_ENV: dev
+      port: 3000
+    env_prod    :
+      NODE_ENV: prod
+      port: 4000
+    instances: 0  # 启用多少个实例，可用于负载均衡, 0:根据cpu核数来决定运行多少个进程
+    exec_mode: cluster

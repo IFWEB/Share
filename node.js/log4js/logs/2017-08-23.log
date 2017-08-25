@@ -1,0 +1,2 @@
+[2017-08-23 19:32:12.862] [INFO] app - Listening on port:3000
+[2017-08-23 19:32:54.590] [INFO] app - ::1 - - "GET / HTTP/1.1" 404 13 "" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36"

@@ -1,0 +1,7 @@
+[2017-08-25 16:17:54.258] [INFO] app - Listening on port:3000
+[2017-08-25 16:19:55.448] [INFO] app - Listening on port:3000
+[2017-08-25 16:20:00.812] [INFO] app - ::1 - - "GET / HTTP/1.1" 404 13 "" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36"
+[2017-08-25 16:22:17.952] [INFO] app - Listening on port:3000
+[2017-08-25 16:22:28.804] [INFO] app - ::1 - - "GET / HTTP/1.1" 404 13 "" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36"
+[2017-08-25 16:22:28.910] [INFO] app - ::1 - - "GET /favicon.ico HTTP/1.1" 404 13 "http://localhost:4000/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36"
+[2017-08-25 16:23:54.120] [INFO] app - Listening on port:3000
