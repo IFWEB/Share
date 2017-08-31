@@ -261,3 +261,6 @@ $pm2 install pm2-logrotate
 $ pm2 set pm2-logrotate:max_size 1K 
 $ pm2 set pm2-logrotate:compress true
 ```
+
+#### 使用[keymetrics](https://app.keymetrics.io/)图形界面进行监控
+![image](https://i.imgur.com/bgPDwbF.png)
