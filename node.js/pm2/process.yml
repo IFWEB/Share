@@ -1,14 +1,28 @@
 
 apps:
-  - script   : server.js
-    watch  : true # 开启watcher，文件更改，自动重启
+  - name: server
+    script: server.js
+    watch: true # 开启watcher，文件更改，自动重启
     ignore_watch:
-      - node_modules
+      - node_modules/
+      - logs/
+      - package.json
+      - npm-debug.log
+      - npm-debug.log.*
+      - process.yml
     env    :
       NODE_ENV: dev
       port: 3000
     env_prod    :
       NODE_ENV: prod
       port: 4000
-    instances: 0  # 启用多少个实例，可用于负载均衡, 0:根据cpu核数来决定运行多少个进程
+    instances: 1  # 启用多少个实例，可用于负载均衡, 0:根据cpu核数来决定运行多少个进程
     exec_mode: cluster
+    max-memory-restart: 1024M # 当内存超过1024M时自动重启。如果工程中有比较棘手的内存泄露问题，这个算是一个折中方案
+    kill_timeout : 3000 # ms
+    out_file : ./logs/out.log # 默认放在/home/user/.pm2/logs/文件夹中
+    error_file : ./logs/error.log
+    # log_file: ./logs/combined.log # 将out日志和error日志合并在一起
+    merge_logs: true # 合并日志，默认不合并。合并时会把所有instance日志输出至一个文件
+    log_date_format : YYYY-MM-DD HH:mm:ss Z
+    # log_type: json #以json的方式输出日志

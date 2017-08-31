@@ -1,40 +1,46 @@
-var express = require('express');
+var express = require('express'),
+    path=require('path');
+
 var app = express();
 
-var port=process.env.port || 3000;
+var port = process.env.port || 3000;
+var count=0;
 
-// 中间件1： 处理请求body,将请求body转换为req.body
-app.use(require('body-parser').urlencoded({ extended: false }));
-
-// 路由'/' ,GET请求,中间件2
-app.get('/', function(req, res, next) {
-    // 返回状态码200，响应头'Content-Type': 'text/html'
-    res.status(200);
-    res.append('Content-Type','text/html');
-    res.send([
-        '<form method="POST" action="/url">',
-        '<p>What is your name?</p>',
-        '<input type="text" name="name">',
-        '<p><button>Submit</button></p>',
-        '</form>'
-    ].join(''));
-});
-
-// 路由 /url,post请求，中间件3
-app.post('/url', function(req, res, next) {
-    // 监听req的end事件，接收请求body结束
-    res.status(200);
-    res.append('Content-Type','text/html');
-    res.send('<p>Your name is <b>' + req.body.name + '</b></p>');
+app.get('/',function(req,res,next){
+   res.sendFile(__dirname + '/index.html');
 })
 
-// 中间件4，处理404
+app.get('/testRotateLog',function(req,res,next){
+    ++count;
+    console.log(count);
+    console.error(count);
+    res.send('hello world');
+});
+
+app.get('/captureError', function(req, res, next) {
+    ++a; // 变量a未被定义，会抛出一个ReferenceError错误
+})
+
+app.get('/error', function(req, res, next) {
+    throw new Error('抛出错误'); // 手动抛出错误
+})
+
+app.get('/assertFalse', function(req, res, next) {
+    console.assert(false, '断言为false,抛出 AssertionError');  // 断言为false,抛出 AssertionError
+})
+
+// 处理404
 app.use(function(req, res, next) {
     res.status(404);
     res.send('404 Not Found');
 })
 
-app.listen(port,function(){
-    console.log('Listening on port:'+port)
-});
+app.listen(port, function() {
+    console.log('这是一个log');
+    console.info('这是一个info'); // console.info() 函数是 console.log() 的一个别名
+    console.dir({ 'pm2': 'Advanced, production process manager for Node.js' });
 
+    console.trace('res');
+    console.error('这是一个error');
+    console.warn('这是一个warn'); // console.warn() 函数是 console.error() 的一个别名
+});
