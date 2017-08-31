@@ -261,6 +261,6 @@ $pm2 install pm2-logrotate
 $ pm2 set pm2-logrotate:max_size 1K 
 $ pm2 set pm2-logrotate:compress true
 ```
-
+== 开启pm2-logrotate后无法手动停止，只能通过卸载pm2-logrotate的方式来停止“ pm2 uninstall pm2-logrotate” ==
 #### 使用[keymetrics](https://app.keymetrics.io/)图形界面进行监控
 ![image](https://i.imgur.com/bgPDwbF.png)
