@@ -238,7 +238,11 @@ $ pm2 start process.yml
 2017-08-30 15:31:57 +08:00: AssertionError: 断言为false,抛出 AssertionError
     at Console.assert (console.js:93:23)
 ```
+<<<<<<< HEAD
 4. pm2 flush 命令pm2 flush 命令能清除默认目录（/home/user/.pm2/logs/）下的日志文件，和自定义目录输出的日志文件的内容，并不会删除日志文件
+=======
+4. pm2 flush 命令能清除默认目录（/home/user/.pm2/logs/）下的日志文件，和自定义目录输出的日志文件的内容
+>>>>>>> 3abd209b73c8d12bf696bc8303a97ece0f907c69
 
 5. ==pm2 reloadLogs到底起什么作用？？？==
 
