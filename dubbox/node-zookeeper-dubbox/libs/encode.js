@@ -32,7 +32,7 @@ Encode.prototype._body = function (method, args) {
   body.write(this._opt._interface);
   body.write(this._opt._version);
   body.write(this._opt._method);
-  var ver = this._opt._dver || '2.5.3.6';
+  // var ver = this._opt._dver || '2.5.3.6';
   // if(ver.startsWith('2.8')){
   //   body.write(-1);  //for dubbox 2.8.X
   // }
