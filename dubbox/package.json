@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "express": "^4.15.4",
+    "js-to-java": "^2.4.0",
+    "node-zookeeper-dubbo": "^2.2.1",
+
+    "hessian.js": "^2.1.8",
+    "node-zookeeper-client": "0.2.2"
+  }
+}
