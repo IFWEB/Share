@@ -17,6 +17,7 @@ get方法会判断当前`Dep.target`（Dep对象用于维护依赖，`Dep.target
 
 
 **1. 为什么有时候我的数据响应式会失效？**
+
 由于这个响应式的建立是在Vue组件渲染时就进行的，所以在代码中给data添加属性就无法实现响应式，因为这些属性并没有加上setter和getter，当它被修改时无法通知Watcher对象去进行更新。
 
 如果我们需要在组件渲染完之后去添加一个响应式的属性，需要用`Vue.$set(obj,'name',value)`来为data对象中已有的对象添加属性。也就是说data中的根属性必须要一开始就定义好，否则无法实现响应式。
@@ -28,15 +29,17 @@ get方法会判断当前`Dep.target`（Dep对象用于维护依赖，`Dep.target
 我们可以通过`Vue.$set`方法给dialog添加一个响应式的callback属性，但是无法添加一个响应式的data根属性productId（假设productId这个属性一开始没有定义）。
 
 **2. 为什么计算属性也能实现响应式？**
+
 在Vue2.0中，data改变时Watcher对象调用render函数重新渲染，所以使用到计算属性的地方也会被重新计算，从而实现了响应式。
 
 **3. 为什么有时响应会有延时？**
+
 比如当我们修改数据后马上去获取DOM时会发现获取到DOM似乎还没有改变，这是因为当数据发生变化时，Vue会将数据的变化放到一个队列中，等到下一个‘tick’再去执行DOM的更新，从而避免反复地去更新DOM。如果我们有一些需要依赖更新后的DOM的操作，我们可以将这些操作作为回调放到`vm.$nextTick（callback）`里，这样在下一个‘tick’就会执行我们回调函数。
 
 
-#接下来看一下代码的具体实现。
+# 接下来看一下代码的具体实现。
 
-##this._init
+## this._init
 
 先从建立一个Vue实例开始看。
 
@@ -57,7 +60,7 @@ get方法会判断当前`Dep.target`（Dep对象用于维护依赖，`Dep.target
 
 首先，组件options中的data会被赋给`vm._data`，然后会执行`observe（data，true）`，接下来看看observe方法是怎么定义的。
 
-##Observer
+## Observer
 
 ![image](https://github.com/IFWEB/Share/blob/master/vue-reactive/assets/Image%20(6).png)
 
@@ -88,7 +91,7 @@ get方法会判断当前`Dep.target`（Dep对象用于维护依赖，`Dep.target
 
 ![image](https://github.com/IFWEB/Share/blob/master/vue-reactive/assets/Image%20(12).png)
 
-##Render
+## Render
 
 接下来看一下Vue组件的渲染过程。
 
@@ -114,7 +117,7 @@ get方法会判断当前`Dep.target`（Dep对象用于维护依赖，`Dep.target
 
 前面我们知道`vm._render`方法会调用生成的render函数来返回一个VNode对象，`vm._update`方法会调用`vm.__patch__`方法将这个VNode对象与之前的VNode对象比较，把差异的部分渲染到真正的DOM树上。
 
-##Watcher
+## Watcher
 
 最后来看一看Watcher类的定义。
 
