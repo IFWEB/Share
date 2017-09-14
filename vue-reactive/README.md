@@ -3,7 +3,7 @@
 
 Vue的响应式原理是通过“观察者、订阅者”模式实现的。
 
-首先，Vue会给data及data下的数组、对象循环调用Object.defineProperty方法来设置getter和setter，以此来拦截data的赋值和取值。也就是说，当我们赋值（如：this.property='string'）时，会调用Object.defineProperty方法设置的set方法，当我们取值时（如：```<div v-if="title">{{title}}</div>```），会调用设置的get方法。
+首先，Vue会给data及data下的数组、对象循环调用Object.defineProperty方法来设置getter和setter，以此来拦截data的赋值和取值。也就是说，当我们赋值（如：`this.property='string'`）时，会调用Object.defineProperty方法设置的set方法，当我们取值时（如：`<div v-if="title">{{title}}</div>`），会调用设置的get方法。
 
 get方法会判断当前Dep.target（Dep对象用于维护依赖，Dep.target用于保存当前Watcher对象）是否为空，如果不为空，则将Dep.target加入到dep对象的subs数组中用以记录依赖，也就是说这个subs数组中记录了所有会取该data的Watcher对象，这样的话当该data发生改变时，我们就能通过这个数组来通知所有的依赖去进行更新，从而完成响应式。
 
