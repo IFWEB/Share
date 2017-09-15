@@ -1,7 +1,7 @@
 # 先大概说下Vue响应式实现的原理。
 ![image](https://github.com/IFWEB/Share/blob/master/vue-reactivity/assets/Image.jpg)
 
-**Vue的响应式原理是通过“观察者、订阅者”模式实现的。**
+**Vue的响应式原理是通过“观察者/订阅者”模式实现的。**
 
 首先，Vue会给data及data下的数组、对象循环调用`Object.defineProperty`方法来设置getter和setter，以此来拦截data的赋值和取值。也就是说，当我们赋值（如：`this.property='string'`）时，会调用`Object.defineProperty`方法设置的set方法，当我们取值时（如：`<div v-if="title">{{title}}</div>`），会调用设置的get方法。
 
