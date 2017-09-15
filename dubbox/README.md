@@ -18,7 +18,7 @@ Fail to decode request due to: RpcInvocation[methodName=getAvailableQuickPayBank
 $ cd dubbox 
 $ node test.js
 ```
-在浏览器上执行
+在浏览器上执行  
 http://localhost:9090/IBankService/getAvailableQuickPayBankMap  
 http://localhost:9090/IAssetAccountService/getZhye  
 http://localhost:9090/IBigDataService/getUserInvestRank  
