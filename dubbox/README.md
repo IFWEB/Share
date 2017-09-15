@@ -12,3 +12,15 @@
 Fail to decode request due to: RpcInvocation[methodName=getAvailableQuickPayBankMap, parameterTypes=[], arguments=null, attachments={dubbo=2.8.4, input=220, path=com.njq.nongfadai.service.IBankService, version=1.0.0}
 ```
 我把这部分代码注释以后就可以用了,所以我将node-zookeeper-dubbo插件完整的拷贝出来将上面那段代码注释，改了一个文件名称为node-zookeeper-dubbox
+
+## 运行
+```
+$ cd dubbox 
+$ node test.js
+```
+在浏览器上执行
+http://localhost:9090/IBankService/getAvailableQuickPayBankMap  
+http://localhost:9090/IAssetAccountService/getZhye  
+http://localhost:9090/IBigDataService/getUserInvestRank  
+http://localhost:9090/IMediaNoticeService/getIndexMediaReport  
+可以看到访问.23服务器的效果
