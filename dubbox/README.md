@@ -22,5 +22,5 @@ $ node test.js
 http://localhost:9090/IBankService/getAvailableQuickPayBankMap  
 http://localhost:9090/IAssetAccountService/getZhye  
 http://localhost:9090/IBigDataService/getUserInvestRank  
-http://localhost:9090/IMediaNoticeService/getIndexMediaReport  
+http://localhost:9090/IMediaNoticeService/getIndexMediaReport    
 可以看到访问.23服务器的效果
