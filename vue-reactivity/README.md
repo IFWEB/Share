@@ -39,7 +39,7 @@ get方法会判断当前`Dep.target`（Dep对象用于维护依赖，`Dep.target
 
 # 接下来看一下代码的具体实现。
 
-## this._init
+## Init
 
 先从建立一个Vue实例开始看。
 
