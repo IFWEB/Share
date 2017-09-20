@@ -4,15 +4,71 @@
 
 那么我们为什么还要使用render函数呢，看看官方给的例子：
 
-![image](https://github.com/IFWEB/Share/blob/master/vue-render-function/assets/Image.png)
+```html
+<script type="text/x-template" id="anchored-heading-template">
+  <h1 v-if="level === 1">
+    <slot></slot>
+  </h1>
+  <h2 v-else-if="level === 2">
+    <slot></slot>
+  </h2>
+  <h3 v-else-if="level === 3">
+    <slot></slot>
+  </h3>
+  <h4 v-else-if="level === 4">
+    <slot></slot>
+  </h4>
+  <h5 v-else-if="level === 5">
+    <slot></slot>
+  </h5>
+  <h6 v-else-if="level === 6">
+    <slot></slot>
+  </h6>
+</script>
+```
+
+```javascript
+Vue.component('anchored-heading', {
+  template: '#anchored-heading-template',
+  props: {
+    level: {
+      type: Number,
+      required: true
+    }
+  }
+})
+```
 
 像这样的template写起来似乎是比较的不优雅，重复代码比较多。如果我们用render函数写的话会是这样的：
 
-![image](https://github.com/IFWEB/Share/blob/master/vue-render-function/assets/Image%20(2).png)
+```javascript
+Vue.component('anchored-heading', {
+  render: function (createElement) {
+    return createElement(
+      'h' + this.level,   // tag name 标签名称
+      this.$slots.default // 子组件中的阵列
+    )
+  },
+  props: {
+    level: {
+      type: Number,
+      required: true
+    }
+  }
+})
+```
 
 啊，代码清爽了很多，虽然没有template写法直观，但是的确少写了很多代码呀。不过这个例子似乎不够直观，并没有表现出render函数有特别强大的功能（￣ω￣=）。官方文档中说，在绝大多数情况下我们都应该使用template作为模板，只有在需要完全的JS编码能力时才去使用render函数。于是我去看了一圈Vue的开源项目，想看看别的项目中有什么使用render函数的例子。然而，并没有找到(￣ー￣)。只找到Element的messageBox组件有一个不是那么render函数的使用：
 
-![image](https://github.com/IFWEB/Share/blob/master/vue-render-function/assets/Image%20(3).png)
+```javascript
+this.$msgbox({
+    title: '消息',
+    message: h('p', null, [
+    h('span', null, '内容可以是 '),
+    h('i', { style: 'color: teal' }, 'VNode')
+    ])
+)
+```
 
 当我们通过this.$msgbox去打开messageBox时，会判断这个message是否为VNode，如果是的话，就将它赋给instance.$slots.default，这样就可以通过js去调用对话框并自定义对话框中的内容。
 
@@ -91,11 +147,64 @@ createElement函数接收3个参数：
 知道应该怎么写render函数之后我们直接上手实践一下，看看会怎么样。
 接下来我会用render函数重写model组件的template。template原来是长这个样子的：
 
-![image](https://github.com/IFWEB/Share/blob/master/vue-render-function/assets/Image%20(4).png)
+```html
+<template>
+    <vodal measure="em" :show="vshow" :mask="mask" :animation="animation" :width="28.5" :height="17" :duration="301" className="my-dialog" @hide="hide">
+        <div v-if="title" class="header">{{title}}</div>
+        <slot></slot>
+        <div v-if="(!Object.keys($slots).length)&&message" class="body">{{message}}</div>
+        <div v-if='!(type==="free")&&vshow&&!autohide'>
+            <button class="vodal-confirm-btn" @keyup.enter="hide('ok')" @click="hide('ok')">确定</button>
+            <button class="vodal-cancel-btn" @click="hide('cancel')">取消</button>
+        </div>
+    </vodal>
+</template>
+```
 
-用render函数写完之后亲测可运行的代码是这个样子的：
+用render函数写完之后代码是这个样子的：
 
-![image](https://github.com/IFWEB/Share/blob/master/vue-render-function/assets/Image%20(5).png)
+```javascript
+render(h){
+    let children=[];
+    if(this.title){
+        children.push(h("div",{attrs:{class:"header"}},this.title));
+    }
+    if((!Object.keys(this.$slots).length)&&this.message){
+        children.push(h("div",{attrs:{class:"body"}},this.message));
+    }
+    else{
+        children.push(this.$slots.default);
+    }
+    if(!(this.type==="free")&&this.vshow&&!this.autohide){
+        children.push(h("div",[
+            h("button",{attrs:{class:"vodal-confirm-btn"},on:{click:()=>{this.hide('ok')},keyup:(e)=>{if(e.keycode===108){hide('ok')}}}},'确定!'),
+            h('button',{attrs:{class:"vodal-cancel-btn"},on:{click:()=>{this.hide('cancel')}}},'取消!')
+        ]));
+    }
+
+    return h(
+        'vodal',
+        {
+            attrs:{
+                measure:"em",
+                className:"my-dialog"
+            },
+            props:{
+                show:this.vshow,
+                mash:this.mask,
+                animation:this.animation,
+                width:28.5,
+                height:17,
+                duration:301
+            },
+            on:{
+                hide:()=>{this.hide}
+            }
+        },
+        children
+    );
+}
+```
 
 啊，似乎代码量一下子就上去了，而且一点都不直观啊！都没办法一眼看出来DOM结构！还好我们的template只是三层的DOM结构，一旦DOM结构的层次变得更深，写起来就更加的僵硬。不仅如此，完全无法享受Vue提供的语法糖了，v-if、v-for、v-model等都需要自己通过JS来手动实现。
 
