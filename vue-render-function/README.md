@@ -152,8 +152,8 @@ createElement函数接收3个参数：
     <vodal measure="em" :show="vshow" :mask="mask" :animation="animation" :width="28.5" :height="17" :duration="301" className="my-dialog" @hide="hide">
         <div v-if="title" class="header">{{title}}</div>
         <slot></slot>
-        <div v-if="(!Object.keys($slots).length)&&message" class="body">{{message}}</div>
-        <div v-if='!(type==="free")&&vshow&&!autohide'>
+        <div v-if="(!Object.keys($slots).length) && message" class="body">{{message}}</div>
+        <div v-if='!(type==="free") && vshow && !autohide'>
             <button class="vodal-confirm-btn" @keyup.enter="hide('ok')" @click="hide('ok')">确定</button>
             <button class="vodal-cancel-btn" @click="hide('cancel')">取消</button>
         </div>
@@ -212,4 +212,4 @@ render(h){
 
 1. 不同于template，在render函数中，使用data、methods等属性时，我们需要标明上下文（this）。
 2. template中所有传到子组件中的props都要用引号包含，但是在render函数中是不需要的。
-3. **事件监听的所有回调函数必须写成箭头函数的形式！**这个是巨大的坑，文档根本没有提及。(≖_≖ )
+3. **事件监听的所有回调函数必须写成箭头函数的形式！** 这个是巨大的坑，文档根本没有提及。(≖_≖ )
