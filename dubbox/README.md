@@ -16,6 +16,7 @@ Fail to decode request due to: RpcInvocation[methodName=getAvailableQuickPayBank
 ## 运行
 ```
 $ cd dubbox 
+$ npm install
 $ node test.js
 ```
 在浏览器上执行  
