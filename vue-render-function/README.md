@@ -21,11 +21,14 @@
 不说那么多，看一下render函数应该怎么写。
 首先，render函数是用来生成VNode的，怎么去生成VNode呢？render函数可以接收一个参数createElement（在Vue中一般习惯用变量h来当形参，h代表hyperscript，意指生成HTML结构的脚本），这个函数就是用来生成VNode的。接下来讲讲这个createElement怎么使用。
 createElement函数接收3个参数：
-①第一个参数代表HTML标签，可以是string，也可以是结果为string的表达式或返回string的函数。
-②第二个参数是代表VNode属性的一个数据对象。
-③第三个参数是一个子节点数组，子节点都是VNode，可以用createElement来生成，也可以使用$slots实例属性接收父组件传进来的slot作为子节点。
+
+1. 第一个参数代表HTML标签，可以是string，也可以是结果为string的表达式或返回string的函数。
+2. 第二个参数是代表VNode属性的一个数据对象。
+3. 第三个参数是一个子节点数组，子节点都是VNode，可以用createElement来生成，也可以使用$slots实例属性接收父组件传进来的slot作为子节点。
+
 官网对于第二个参数数据对象的解释：
-```
+
+```javascript
 {
     // 和`v-bind:class`一样的 API
     'class': {
@@ -84,6 +87,7 @@ key: 'myKey',
 ref: 'myRef'
 }
 ```
+
 知道应该怎么写render函数之后我们直接上手实践一下，看看会怎么样。
 接下来我会用render函数重写model组件的template。template原来是长这个样子的：
 
