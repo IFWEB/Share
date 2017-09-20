@@ -58,7 +58,7 @@ Vue.component('anchored-heading', {
 })
 ```
 
-啊，代码清爽了很多，虽然没有template写法直观，但是的确少写了很多代码呀。不过这个例子似乎不够直观，并没有表现出render函数有特别强大的功能（￣ω￣=）。官方文档中说，在绝大多数情况下我们都应该使用template作为模板，只有在需要完全的JS编码能力时才去使用render函数。于是我去看了一圈Vue的开源项目，想看看别的项目中有什么使用render函数的例子。然而，并没有找到(￣ー￣)。只找到Element的messageBox组件有一个不是那么render函数的使用：
+啊，代码清爽了很多，虽然没有template写法直观，但是的确少写了很多代码呀。不过这个例子似乎并没有表现出render函数有特别强大的功能（￣ω￣=）。官方文档中说，在绝大多数情况下我们都应该使用template作为模板，只有在需要完全的JS编码能力时才去使用render函数。于是我去看了一圈Vue的开源项目，想看看别的项目中有什么使用render函数的例子。然而，并没有找到(￣-￣)。只找到Element的messageBox组件有一个不是那么render函数的使用：
 
 ```javascript
 this.$msgbox({
