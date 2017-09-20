@@ -1,0 +1,4 @@
+我们知道，在初始化Vue组件时，Vue会根据template或el的outerHTML来生成一个render函数用以生成Virtual DOM。但是如果初始化的options对象中没有template并且有render属性的话，就会使用它来做render函数，也就是说我们可以自己手写render函数而不需要Vue帮我们生成（￣ω￣=）。听起来似乎很麻烦的样子，明明template这种HTML写法的更加直观，通过JS手写实在是太反人类反社会主义了。
+
+那么我们为什么还要使用render函数呢，看看官方给的例子：
+
