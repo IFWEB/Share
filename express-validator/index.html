@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body>
+    <button type="button" onclick="ajax('/test1?username=chua')">普通校验：/test1?username=chua</button>
+    <button type="button" onclick="ajax('/test1?username=chua@163.com&password=123456')">普通校验：/test1?username=chua@163.com&password=123456</button>
+    <br>
+    <button type="button" onclick="ajax('/test2?username=chua')">自定义校验：/test2?username=chua</button>
+    <button type="button" onclick="ajax('/test2?username=chua@163.com')">自定义校验：/test2?username=chua@163.com</button>
+    <button type="button" onclick="ajax('/test2?username=aa@163.com')">自定义校验：/test2?username=aa@163.com</button>
+    <br>
+    <button type="button" onclick="ajax('/test3?username=chua')">规范化接口返回：/test3?username=chua规范返回</button>
+    <button type="button" onclick="ajax('/test3?username=chuda@163.com')">规范化接口返回：/test3?username=chuda@163.com规范返回</button>
+    <br>
+    <br><br>
+    <div id="myDiv"></div>
+    <script type="text/javascript">
+    function ajax(str) {
+        var xmlhttp;
+        if (window.XMLHttpRequest) {
+            //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // IE6, IE5 浏览器执行代码
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+        }
+
+        xmlhttp.open("GET", str, true);
+        xmlhttp.send();
+    }
+    </script>
+</body>
+
+</html>
