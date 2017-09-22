@@ -11,9 +11,11 @@ Swagger主要分为三部分：
 
 安装及使用：
 1. 全局安装swagger-jsdoc
+
 ```
 $ npm install swagger-jsdoc -g
 ```
+
 2. 下载Swagger UI 地址：[https://github.com/swagger-api/](https://github.com/swagger-api/),取出swagger-ui里面的dist文件取出，作为静态文件使用，用node建立服务：
  ![image](./images/1.png)
  ![image](./images/2.png)
@@ -26,6 +28,7 @@ $ npm install swagger-jsdoc -g
  ![image](./images/4.png)
 
 运行命令生成OAS文件，文件名api-docs.json
+
 ```
 swagger-jsdoc -d ./api-docs/swaggerDef.js  routes/*.js -o ./api-docs/api-docs.json -w
 ```
@@ -40,8 +43,9 @@ swagger-jsdoc -d ./api-docs/swaggerDef.js  routes/*.js -o ./api-docs/api-docs.js
 ![image](./images/7.png)
 
 8. 开启node.js服务
+
 ```
 $ node app.js
 ```
 
-访问http://localhost:4000/swagger/index.html即可
+访问 http://localhost:4000/swagger/index.html  即可
