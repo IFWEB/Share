@@ -1,0 +1,87 @@
+{
+  "info": {
+    "title": "api",
+    "version": "1.0.0",
+    "description": "A sample API"
+  },
+  "host": "localhost:4000",
+  "basePath": "/",
+  "swagger": "2.0",
+  "paths": {
+    "/": {
+      "get": {
+        "description": "描述",
+        "tags": [
+          "index"
+        ],
+        "produces": [
+          "text/palin"
+        ],
+        "responses": {
+          "200": {
+            "description": "返回hello swagger",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "description": "描述",
+        "tags": [
+          "users"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "phone": {
+                  "type": "string",
+                  "description": "电话号码"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "密码"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登录成功，返回用户名和年龄",
+            "schema": {
+              "$ref": "#/definitions/login"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "login": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "age": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "responses": {},
+  "parameters": {},
+  "securityDefinitions": {},
+  "tags": []
+}
