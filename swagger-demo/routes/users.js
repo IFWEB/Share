@@ -9,6 +9,7 @@ var router = express.Router();
    *     properties:
    *       username:
    *         type: "string"
+   *         description: "电话号码"
    *       age:
    *         type: "integer"
    *

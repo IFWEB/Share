@@ -72,7 +72,8 @@
       "type": "object",
       "properties": {
         "username": {
-          "type": "string"
+          "type": "string",
+          "description": "电话号码"
         },
         "age": {
           "type": "integer"
