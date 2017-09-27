@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "coverage": "nyc --reporter=text mocha"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +15,7 @@
     "express": "^4.15.5"
   },
   "devDependencies": {
+    "nyc": "^11.2.1",
+    "should": "^13.1.0"
   }
 }
