@@ -7,6 +7,22 @@ var http = require('http'),
     expressValidator = require('express-validator'),
     mongoConf = require('./configs/config.mongo.js');
 
+mongoose.Promise = global.Promise;
+
+//连接mongodb
+var db = mongoose.createConnection(mongoConf.db);
+db.on('error', function() {
+  console.log('mongoDB连接失败，服务开启终止');
+});
+// 连接断开
+db.on('disconnected',function(){
+  console.error('mongoDB连接断开');
+});
+db.once('open', function() {
+  console.log('mongoDB连接成功');
+});
+
+
 var env = process.env.NODE_ENV || 'development',
     port = process.env.port || 4000;
 
@@ -39,18 +55,6 @@ app.use(function(err, req, res, next) {
     res.json(res.locals.error);
 });
 
-//连接mongodb
-var db = mongoose.createConnection(mongoConf.db);
-db.on('error', function() {
-    console.log('mongoDB连接失败，服务开启终止')
-});
-// 连接断开
-db.on('disconnected',function(){
-  console.error('mongoDB连接断开')
-});
-db.once('open', function() {
-    console.log('mongoDB连接成功')
-});
 
 //开启服务
 app.listen(app.get('port'), function() {

@@ -1,10 +1,13 @@
 var express = require('express'),
     tokenVerify = require('../cusMiddleWares/tokenVerify'),
-    Users = require('../models/User'),
     resErrType = require('../constants/resErrType'),
     resResult = require('../utils/resResult'),
     bcrypt = require('bcrypt'),
-    jwtSgin = require('../utils/jwt').jwtSgin;
+    jwtSign = require('../utils/jwt').jwtSign,
+    Users = require('../models/User');
+
+var Users = mongoose.model('User', userSchema);
+
 
 var router = express.Router();
 
@@ -42,17 +45,17 @@ router.post('/register', function(req, res, next) {
     next();
 }, function(req, res, next) {
     var { phone, password } = req.body;
-    //判断用户是否已注册
-    Users.findOne({ phone: '18408244552' }, function(err, user) {
 
+   //  判断用户是否已注册
+    Users.findOne({ phone: phone }, function(err, user) {
         if (err) return next(err);
         if (user) return res.json(resResult.error({ code: 222, message: '已注册，请直接登录' })); //已注册
 
         bcrypt.genSalt(12, function(err, salt) { //未注册,hash密码并存储
-            if (err) return next(err)
+            if (err) return next(err);
 
             bcrypt.hash(password, salt, function(err, hash) {
-                if (err) return next(err)
+                if (err) return next(err);
 
                 var user = new Users({
                     phone: phone,
@@ -61,16 +64,16 @@ router.post('/register', function(req, res, next) {
                     avatar: '',
                     desc: '',
                     registerTime: new Date()
-                })
+                });
                 user.save(function(err, user) {
-                    if (err) return next(err)
+                    if (err) return next(err);
 
                     jwtSign(user._id).then(token => {
-                        res.json(resResult.success({ token: token })) //返回token
+                        res.json(resResult.success({ token: token })); //返回token
                     }).catch(err => {
                         next(err);
                     });
-                })
+                });
             });
 
         });

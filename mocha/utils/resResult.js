@@ -1,18 +1,21 @@
-
-exports.error = function (errType,errors) {
+var error = function (errType, error) {
   return {
     code: errType.code,
-    status: 'error',
-    desc: errType.desc,
-    errors:errors|| {}
+    message: errType.message,
+    errors: error || {}
   };
 };
 
-exports.success = function (obj) {
+var success = function (obj) {
   return {
     code: 0,
-    status: 'success',
-    desc: 'request success',
+    message: 'request success',
     data: obj || {}
   };
 };
+
+
+module.exports = {
+  error: error,
+  success: success
+}

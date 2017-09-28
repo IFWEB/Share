@@ -1,6 +1,3 @@
-/**
- * Created by luojian on 17-5-17.
- */
 module.exports = {
 
   ERR_INVALID_TOKEN: {
