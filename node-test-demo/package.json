@@ -2,7 +2,7 @@
   "name": "test-demo",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "mocha",
     "coverage": "nyc --reporter=text mocha"
@@ -12,10 +12,12 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
-    "express": "^4.15.5"
+    "express": "^4.15.5",
+    "mongoose": "^4.11.13"
   },
   "devDependencies": {
     "nyc": "^11.2.1",
-    "should": "^13.1.0"
+    "should": "^13.1.0",
+    "supertest": "^3.0.0"
   }
 }

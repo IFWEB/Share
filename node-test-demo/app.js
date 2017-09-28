@@ -31,10 +31,12 @@ app.use(function(err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.end('error');
 });
 
 // 监听服务
 app.listen(port, function() {
     console.log('Express server listening on port '+port);
 });
+
+module.exports = app;

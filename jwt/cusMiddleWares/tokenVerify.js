@@ -19,4 +19,4 @@ var tokenVerify = function(req, res, next) {
     }
 }
 
-module.exports = tokenVerify
+module.exports = tokenVerify 
