@@ -4,10 +4,7 @@ var express = require('express'),
     resResult = require('../utils/resResult'),
     bcrypt = require('bcrypt'),
     jwtSign = require('../utils/jwt').jwtSign,
-    Users = require('../models/User');
-
-var Users = mongoose.model('User', userSchema);
-
+    Users = require('../models/user.js');
 
 var router = express.Router();
 
@@ -46,24 +43,23 @@ router.post('/register', function(req, res, next) {
 }, function(req, res, next) {
     var { phone, password } = req.body;
 
-   //  判断用户是否已注册
+    //  判断用户是否已注册
     Users.findOne({ phone: phone }, function(err, user) {
+
         if (err) return next(err);
         if (user) return res.json(resResult.error({ code: 222, message: '已注册，请直接登录' })); //已注册
 
         bcrypt.genSalt(12, function(err, salt) { //未注册,hash密码并存储
             if (err) return next(err);
-
+            // hash密码并存储
             bcrypt.hash(password, salt, function(err, hash) {
                 if (err) return next(err);
 
                 var user = new Users({
                     phone: phone,
                     password: hash,
-                    nickname: '',
-                    avatar: '',
-                    desc: '',
-                    registerTime: new Date()
+                    userName: '柠檬小C',
+                    age: 18
                 });
                 user.save(function(err, user) {
                     if (err) return next(err);
@@ -105,19 +101,16 @@ router.post('/login', function(req, res, next) {
 
 // 修改用户个人信息
 router.post('/modifyProfile', tokenVerify, function(req, res, next) {
-    var { uid, nickname, avatar, desc, gender } = req.body;
+    var { uid, userName, age } = req.body;
     Users.findOneAndUpdate({ _id: uid }, {
-            $set: { nickname: nickname, avatar: avatar, desc: desc, gender: gender }
-        }, { new: true, upsert: false, select: 'nickname avatar desc gender' },
+            $set: { userName: userName, age: age }
+        }, { new: true, upsert: false, select: 'userName age' },
         function(err, user) {
-            if (err) return next(err)
-
+            if (err) return next(err);
             return res.json(
                 resResult.success({
-                    nickname: user.nickname,
-                    avatar: user.avatar,
-                    desc: user.desc,
-                    gender: user.gender
+                    userName: user.userName,
+                    age: user.age
                 })
             )
         })
@@ -126,9 +119,8 @@ router.post('/modifyProfile', tokenVerify, function(req, res, next) {
 
 // 获取用户个人信息
 router.get('/profile', tokenVerify, function(req, res, next) {
-    var user = req.body.user;
-
-    Users.findById(user._id, 'nickname avatar desc gender', function(err, user) {
+    var { uid } = req.body;
+    Users.findById({ _id: uid }, 'userName age', function(err, user) {
         if (err) return next(err)
 
         return res.json(

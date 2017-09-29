@@ -3,8 +3,9 @@
  * @param options: http options object
  * @param callback: callback to pass the results JSON object(s) back
  */
-exports.vcode = function () {
-  var code = "", codeLength = 4;
+var vcode = function (codeLength) {
+  var code = "", 
+      codeLength = codeLength || 4;
   var random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
   for (var i = 0; i < codeLength; i++) {
     var index = Math.floor(Math.random() * 10);
@@ -12,3 +13,5 @@ exports.vcode = function () {
   }
   return code;
 }
+
+module.exports=vcode;

@@ -9,7 +9,7 @@ db.once('open', function() {
   console.log('connect success\r\n\r\n')
 });
 
-// // 增加一条数据
+// 增加一条数据
 // var user = new Users({
 //     phone: '18408244552', //用户手机
 //     password: '123456', //用户密码
@@ -22,12 +22,11 @@ db.once('open', function() {
 //     console.log(user)
 // })
 
-
 // // 查找数据
-// Users.findOne({phone:'18408244552'},function(err, user) {
-//     if (err) return console.log(err)
-//     console.log(user)
-// })
+Users.findOne({phone:'18408244552'},function(err, user) {
+    if (err) return console.log(err)
+    console.log(user)
+})
 
 
 

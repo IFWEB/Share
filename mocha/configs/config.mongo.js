@@ -2,13 +2,14 @@ var env = process.env.NODE_ENV || 'development';
 
 var config = {
     "development": {
-        db: 'mongodb://127.0.0.1:27017/blod'
+        db: 'mongodb://localhost/devDemo'
     },
     "production": {
-      db: 'mongodb://127.0.0.1:27017/blod'
+        db: 'mongodb://localhost/prodDemo'
+    },
+    "test": {
+        db: 'mongodb://localhost/testDemo'
     }
 }
 
 module.exports = config[env];
-
-

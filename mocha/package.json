@@ -3,13 +3,8 @@
   "version": "0.0.0",
   "main": "app.js",
   "scripts": {
-    "start:prod": "NODE_ENV=production node app.js",
-    "start:prod:win": "set NODE_ENV=production&&node app.js",
-    "start:dev": "node-dev app.js",
-    "start:dev:win": "set NODE_ENV=development&&node-dev app.js",
-    "mongodb:local:ubuntu": "mongod --dbpath /home/luojian/mongoDatabase/hyh",
-    "mongodb:local:mac": "mongod --dbpath /Users/robot/Desktop/luojian/db",
-    "mongodb:remote": "mongod --dbpath /home/ubuntu/myApp/db"
+    "start": "set NODE_ENV=development && node app.js",
+    "test": "set NODE_ENV=test && mocha"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",
@@ -18,7 +13,7 @@
     "express": "^4.15.5",
     "express-validator": "^4.2.1",
     "jsonwebtoken": "^8.0.1",
-    "mongoose": "^4.8.1"
+    "mongoose": "^4.11.7"
   },
   "devDependencies": {
     "mocha": "^3.5.3",
