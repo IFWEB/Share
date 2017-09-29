@@ -9,7 +9,7 @@ var error = function (errType, error) {
 var success = function (obj) {
   return {
     code: 0,
-    message: 'request success',
+    message: 'success',
     data: obj || {}
   };
 };

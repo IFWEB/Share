@@ -8,7 +8,7 @@ describe('验证jwt', function() {
 
     var uid = 'qwertyuiopasdfgh',
         token = '';
-        
+
     before(function() {
         token = jwt.sign({ uid: uid }, jwtConf.jwt_secret, {
             expiresIn: jwtConf.jwt_expiresIn,
@@ -19,12 +19,10 @@ describe('验证jwt', function() {
 
     it('验证jwtSign', function() {
         return jwtSign(uid).should.be.fulfilledWith(token);
-
     })
 
     it('验证jwtVerify', function() {
         return jwtVerify(token).should.be.fulfilledWith(decode);
-
     })
 
 });

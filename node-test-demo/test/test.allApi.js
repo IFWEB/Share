@@ -1,6 +1,5 @@
 var should = require('should');
 
-
 describe('assertion', function() {
     it('assertion assert', function() {
         should.deepEqual({ a: 1 }, { a: 1 });

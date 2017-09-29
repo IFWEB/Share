@@ -56,25 +56,42 @@ describe('User API', function() {
     });
 
     //正常情况下访问 /user/modifyProfile
-    // it('修改用户个人信息应该返回', function(done) {
-
-    //     agent.post('/user/modifyProfile')
-    //         .set('content-type', 'application.json')
-    //         .send({
-    //             "token": token,
-    //             "userName": "柠檬小C",
-    //             "age": 18
-    //         })
-    //         .expect(200)
-    //         .expect('content-type', /application\/json/)
-    //         .end(function(err, res) {
-    //             if (err) {
-    //                 done(err);
-    //             } else {
-    //                 should(res.body.code).equal(0);
-    //                 should(res.body.data).should.have.properties(['userName', 'age']);
-    //                 done();
-    //             };
-    //         })
-    // })
+    it('修改用户个人信息应该返回修改后的用户个人信息', function(done) {
+        agent.post('/user/modifyProfile')
+            .send({
+                "token": token,
+                "userName": "柠檬小A",
+                "age": 28
+            })
+            .expect(200)
+            .expect('content-type', /application\/json/)
+            .end(function(err, res) {
+                if (err) {
+                    done(err);
+                } else {
+                    should(res.body.code).equal(0);
+                    should(res.body.data).have.keys('userName', 'age');
+                    done();
+                };
+            })
+    });
+ 
+    //正常情况下访问 /user/profile
+    it('获取用户个人信息', function(done) {
+        agent.get('/user/profile')
+            .query({
+                "token": token,
+            })
+            .expect(200)
+            .expect('content-type', /application\/json/)
+            .end(function(err, res) {
+                if (err) {
+                    done(err);
+                } else {
+                    should(res.body.code).equal(0);
+                    should(res.body.data).have.keys('userName', 'age');
+                    done();
+                };
+            })
+    })
 })

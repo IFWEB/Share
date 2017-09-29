@@ -54,7 +54,6 @@ app.use(function(err, req, res, next) {
     res.send(err);
 });
 
-
 //开启服务
 app.listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
