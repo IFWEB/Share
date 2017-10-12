@@ -6,13 +6,13 @@
 其主要目的就是跟踪到每一个用户在系统的操作行为，如对数据进行查询、新增、编辑或删除甚至是登录等行为。更进一步的理解可以说是对用户使用系统情况的跟踪，对数据的跟踪防止数据意外删除、更改时有所记录，有所依据，以便对数据的还原，从某种程序上可以保护数据的完整性。  
 
 ### 关键信息
-我们的系统中也做了不能物理删除的处理，而且由于node作为接口中间层（浏览器-->node接口层-->dubbo服务层），node不直接操作数据库，所以不需要做数据变更的记录（由dubbo层记录）。node层的操作日志主要记录用户操作的业务和操作类型（增删改查）就行。
+我们的系统中也做了不能物理删除的处理，而且由于node作为接口中间层（浏览器-->node接口层-->dubbo服务层），node不直接操作数据库，所以不需要做数据变更的记录（由dubbo层记录）。node层的操作日志主要记录用户操作的业务和操作类型（增删改查）就行。  
 userName  操作用户  
 businessName 业务名称（指第三级菜单） 
 ![业务名称](https://raw.githubusercontent.com/IFWEB/share/master/operate-log/img/businessName.png)  
-type 操作类型（insert/update/remove/find，和数据库操作名称保持一致,还有一个类型是'unkown:xxx'，当用户写入的操作日志类型不正确时候，比如写类型是'add',则保存如数据库类型是'unkown:add'）
-description 详细描述
-time 操作时间
+type 操作类型（insert/update/remove/find，和数据库操作名称保持一致,还有一个类型是'unkown:xxx'，当用户写入的操作日志类型不正确时候，比如写类型是'add',则保存如数据库类型是'unkown:add'）  
+description 详细描述  
+time 操作时间  
 
 ### demo运行
 安装依赖  
@@ -27,8 +27,7 @@ $ mongod
 ```
 $ node app.js 
 ```
-在浏览器访问  
-http://localhost:3000/operate-log  
+在浏览器访问 http://localhost:3000/operate-log  
 查看数据库new-node-deploy的operatelogs表，新添加了一条数据
 ```
 {
