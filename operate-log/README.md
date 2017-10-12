@@ -15,6 +15,7 @@ description 详细描述
 time 操作时间  
 
 ### demo运行
+使用高版本的node，最好6.*.*及以上
 安装依赖  
 ```
 $ npm install
