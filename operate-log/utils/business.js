@@ -41,7 +41,7 @@ function addOLog(user, businessN = '', tp = 'unkown', descript = '') {
     }
     //查看类型对不对
     if (!types.includes(typeS)) {
-        typeS = 'unkown:' + typeS;
+        typeS = `unkown:${typeS}`;
     }
     obj.type = typeS;
     obj.time = new Date();
