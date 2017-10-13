@@ -49,7 +49,7 @@ function addOLog(user, businessN = '', tp = 'unkown', descript = '') {
     DB.operateLog.insert(obj, function(err, data) {
         var resData = {};
         if (err) {
-            console.log('insert  opertate log '+ JSON.stringify(m) +' err: ' + err);
+            console.log(`insert  opertate log ${JSON.stringify(obj)} err: ${err}`);
         }
     });
 }
