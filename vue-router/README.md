@@ -95,6 +95,7 @@ beforeRouteEnter (to, from, next) {
 
 ## 五、路由懒加载
 结合Vue的异步组件和Webpack的代码分割功能，我们能够实现路由组件的懒加载。`const Component= () => import('./Component.vue')`，像这样我们就能定义一个能被Webpack进行代码分割的异步组件，然后我们将该组件用于路由配置就可以了。
+
 需要注意的是，当项目比较大时，路由懒加载可能会造成热更新时webpack打包非常慢。这个时候我们可以根据NODE_ENV只在生产环境才进行路由懒加载，这样就能使我们在开发环境中更快地完成热更新打包。
 
 
