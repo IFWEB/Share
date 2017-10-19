@@ -4,6 +4,7 @@
 - [node.js](https://github.com/IFWEB/Share/tree/master/node.js)
 - [pm2](https://github.com/IFWEB/Share/tree/master/pm2)
 - [Vue响应式原理](https://github.com/IFWEB/Share/tree/master/vue-reactivity)
+- [Vue-Router](https://github.com/IFWEB/Share/tree/master/vue-router)
 - [Vue-render函数](https://github.com/IFWEB/Share/tree/master/vue-render-function)
 - [swagger-demo](https://github.com/IFWEB/Share/tree/master/swagger-demo)
 - [node.js测试](https://github.com/IFWEB/Share/tree/master/node-test-demo)
