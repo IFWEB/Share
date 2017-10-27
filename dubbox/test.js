@@ -33,6 +33,7 @@ const opt = {
   }
 };
 
+opt.java = require('js-to-java');
 
 const Dubbo = new nzd(opt);
 
