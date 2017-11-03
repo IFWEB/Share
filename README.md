@@ -7,7 +7,7 @@
 - [swagger-demo](https://github.com/IFWEB/Share/tree/master/swagger-demo)
 - [node.js测试](https://github.com/IFWEB/Share/tree/master/node-test-demo)
 - [mongoDB数据库分片](https://github.com/IFWEB/Share/tree/master/mogodb/sharding)
-- [dubbo](https://github.com/IFWEB/Share/tree/master/dubbo)
+- [dubbo](https://github.com/IFWEB/Share/tree/master/dubbox)
 - [操作日志](https://github.com/IFWEB/Share/tree/master/operate-log)  
 - [express-validator做参数校验](https://github.com/IFWEB/Share/tree/master/express-validator)  
 - [jwt实现session多服务器共享](https://github.com/IFWEB/Share/tree/master/jwt)  
