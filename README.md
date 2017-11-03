@@ -10,8 +10,8 @@
 - [dubbo](https://github.com/IFWEB/Share/tree/master/dubbo)
 - [操作日志](https://github.com/IFWEB/Share/tree/master/operate-log)  
 - [express-validator做参数校验](https://github.com/IFWEB/Share/tree/master/express-validator)  
-- [jwt实现session多服务器共享](https://github.com/IFWEB/Share/tree/master/jwtr)  
-- 
+- [jwt实现session多服务器共享](https://github.com/IFWEB/Share/tree/master/jwt)  
+- [node后台采坑总结](https://github.com/IFWEB/Share/tree/master/node-experience)  
 
 ### Vue分享
 - [Vue响应式原理](https://github.com/IFWEB/Share/tree/master/vue/vue-reactivity)
