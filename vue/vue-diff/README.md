@@ -56,7 +56,7 @@ const modules = platformModules.concat(baseModules)
 export const patch: Function = createPatchFunction({ nodeOps, modules })
 ```
 
-可以看到__patch__方法主要就是调用了createPatchFunction这个函数。 这个函数的代码就不全部贴上来了， 总共600多行( ￣─￣)。 一步步看看它到底干了些什么。
+可以看到__patch__方法主要就是调用了createPatchFunction这个函数。 一步步看看它主要干了些什么。
 
 顾名思义， 这个函数的作用是创建并返回一个patch函数。
 
@@ -104,7 +104,7 @@ return function patch (oldVnode, vnode, hydrating, removeOnly, parentElm, refElm
 }
 ```
 
-这个patch函数里， 会进行许多的判断：
+在这个返回的patch函数里， 会进行许多的判断：
 
 1. 判断vnode和oldVnode是否isDef（ 即非undefined且非null， 下面简称已定义）， 若vnode已定义且oldVnode未定义， 没有新的vnode就意味着要将组件销毁掉， 就会循环调用invokeDestroyHook函数将oldVnode销毁掉。
 1. 如果oldVnode未定义， 意味着这是第一次patch， 就会调用 `createElm(vnode, insertedVnodeQueue, parentElm, refElm)`创建一个新的DOM。
@@ -303,3 +303,4 @@ function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly
   }
 }
 ```
+
