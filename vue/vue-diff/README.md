@@ -1,5 +1,4 @@
-#
-Vue源码研究之diff机制
+# Vue源码研究之diff机制
 
 之前研究Vue的响应式原理有提到， 当数据发生变化时， Watcher会调用 `vm._update(vm._render(), hydrating)`来进行DOM更新， 接下来我们看看这个具体的更新过程是如何实现的。
 
@@ -57,7 +56,7 @@ const modules = platformModules.concat(baseModules)
 export const patch: Function = createPatchFunction({ nodeOps, modules })
 ```
 
-可以看到__patch__方法主要就是调用了createPatchFunction这个函数。 这个函数的代码就不全部贴上来了， 总共600多行( ￣ー￣ )。 一步步看看它到底干了些什么。
+可以看到__patch__方法主要就是调用了createPatchFunction这个函数。 这个函数的代码就不全部贴上来了， 总共600多行( ￣─￣)。 一步步看看它到底干了些什么。
 
 顾名思义， 这个函数的作用是创建并返回一个patch函数。
 
