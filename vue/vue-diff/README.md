@@ -39,7 +39,7 @@ Vue.prototype._update = function(vnode: VNode, hydrating ? : boolean) {
 }
 ```
 
-( 这里我们就将一些不太重要的代码忽略掉不讲了， 比如callHook调用钩子函数之类的， 我们只关注实现DOM更新相关代码。 )
+( 这里我们就将一些不太重要的代码忽略掉不讲了， 比如callHook调用钩子函数之类的， 我们只关注实现DOM更新相关代码。)
 
 这里面最重要的代码就是通过 `vm.__patch__`
 进行DOM更新。 如果之前没有渲染过， 就直接调用 `vm.__patch__`
