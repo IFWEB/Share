@@ -15,6 +15,6 @@
 
 ### Vue分享
 - [Vue响应式原理](https://github.com/IFWEB/Share/tree/master/vue/vue-reactivity)
-- [Vue虚拟DOM diff原理](https://github.com/IFWEB/Share/tree/master/vue/vue-diff)
+- [Vue源码研究之diff机制](https://github.com/IFWEB/Share/tree/master/vue/vue-diff)
 - [Vue-render函数](https://github.com/IFWEB/Share/tree/master/vue/vue-render-function)
 - [Vue-Router](https://github.com/IFWEB/Share/tree/master/vue/vue-router)
