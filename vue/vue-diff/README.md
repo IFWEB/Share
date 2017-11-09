@@ -213,7 +213,7 @@ patchVnode主要是对oldVnode和vnode进行一定的对比：
     1. 同时如果oldVnode.text已定义，则通过setTextContent将elm的text设为空（因为vnode.text未定义）。
 1. 如果vnode.text已定义并且不等于oldVnode.text的话，则将elm的text设为vnode.text。
 
-我们先来看下比较简单的vnode和oldVnode只有其中一个有children时调用的addVnodes和removeVnodes函数。
+我们先来看下比较简单的当vnode和oldVnode只有其中一个有children时调用的addVnodes和removeVnodes函数。
 
 ```javascript
 //摘自\core\vdom\patch.js
@@ -304,3 +304,26 @@ function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly
 }
 ```
 
+在这里我们主要需要关注三个数组：oldCh、newCh和parentElm的children。oldCh就是oldVnode.children，newCh就是vnode.children，parentElm就是oldVnode.elm。
+
+而oldStartIdx、oldEndIdx、newStartIdx和newEndIdx这四个是用于标志当前关注的vnode的头指针和尾指针。
+
+简单来说，我们会将oldCh和newCh进行比较，将oldCh跟newCh差异的部分patch到parentElm中，最终得到一个根据newCh所对应的elm.children。接下来我们一步步分析这个函数到底是如何进行diff的。
+
+1. 首先我们会进行一个循环，当 oldStartIdx <= oldEndIdx 并且 newStartIdx <= newEndIdx 时继续进行循环。
+1. 在循环中，先判断oldStartVnode跟oldEndVnode是否存在，不存在则指针跳到下一个。在后面会讲到为什么需要这一步。
+1. 接下来会进行四个判断。
+    1. 如果满足`sameVnode(oldStartVnode, newStartVnode)`，则递归调用patchVnode对两者进行比较，同时头指针往右走。因为我们最终想要得到的是newCh所对应的elm，而这个elm是oldVnode.elm，它的children一开始是根据oldCh生成的。那么当oldStartVnode跟newStartVnode相同时，意味着elm.children中这个位置的子节点已经是跟newCh所对应的。
+    1. 如果满足`sameVnode(oldEndVnode, newEndVnode)`，同理，递归调用patchVnode对两者进行比较，同时尾指针往左走。
+    1. 如果满足`sameVnode(oldStartVnode, newEndVnode)`，意味着newEndVnode跟oldStartVnode相同，这个时候递归调用patchVnode对两者进行比较后我们需要通过`nodeOps.insertBefore(parentElm, oldStartVnode.elm, nodeOps.nextSibling(oldEndVnode.elm))`，将oldStartVnode.elm移动到parentElm.children中newEndVnode所对应的位置，也就是oldEndVnode.elm后面。
+    1. 如果满足`sameVnode(oldEndVnode, newStartVnode)`，同理，通过递归调用patchVnode对两者进行比较后通过`nodeOps.insertBefore(parentElm, oldEndVnode.elm, oldStartVnode.elm)`将oldEndVnode.elm移动到parentElm.children中newStartVnode所对应的位置，也就是oldStartVnode.elm前面。
+1. 如果以上判断都不满足，我们就直接通过key去寻找oldCh中与newStartVnode相对应的vnode。
+    1. 如果没找到对应的vnode，意味着这是一个新的节点，我们通过`createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm)`创建一个新的DOM节点并插入到oldStartVnode.elm前面。
+    1. 如果找到了oldCh中对应的vnode，我们用elmToMove将这个vnode保存起来，通过递归调用patchVnode对这个vnode跟newStartVnode进行对比，然后将oldCh中对应的vnode设为undefined，同时通过`nodeOps.insertBefore(parentElm, elmToMove.elm, oldStartVnode.elm)`将elmToMove.elm移动到oldStartVnode.elm前面。
+1. 当不再满足oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx时，循环结束。这时候我们就要判断到底是oldStartIdx > oldEndIdx还是newStartIdx > newEndIdx。
+    1. 如果oldStartIdx > oldEndIdx，因为只有当oldCh中的节点被复用时，oldCh的指针才会移动，当oldCh的头指针大于尾指针时，意味着oldCh已经没有节点可以被复用了，这样我们就需要直接将newCh中还未添加到parentElm.children的节点通过`addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue)`添加到parentElm.children中。
+    1. 如果newStartIdx > newEndIdx，意味着newCh中的所有节点都已经在parentElm.children中了，也就意味着OldCh中如果oldStartIdx到oldEndIdx之间（包括oldStartIdx和oldEndIdx）指针所指向的节点在newCh中没有对应的节点，也就是说剩下的都是多余的节点，所以我们需要通过`removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx)`将多余的节点都移除。
+
+经过这样的一个过程之后，parentElm.children就变成了与newCh相对应了。
+
+总的来说，patchVnode的作用是根据newCh生成相应的parentElm.children，同时尽量复用其中的节点。所以对于每一个newCh的节点，会先在oldCh中找相应的节点，找到了就将其移动到parentElm.children中与newCh对应的位置，没找到就创建一个新的节点插入到对应的位置。最后将parentElm.children中多余的节点移除或者将newCh中还未添加到parentElm.children中的节点添加上去。
