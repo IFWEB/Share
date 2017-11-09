@@ -1,4 +1,4 @@
-# Vue源码研究之diff机制
+# Vue组件渲染机制
 
 之前研究Vue的响应式原理有提到， 当数据发生变化时， Watcher会调用 `vm._update(vm._render(), hydrating)`来进行DOM更新， 接下来我们看看这个具体的更新过程是如何实现的。
 
