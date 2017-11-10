@@ -388,9 +388,9 @@ newCh指针           |   |   | ↑ | ↑ |
 
 parentElm.children | 5 | 2 | 6 | 3 | 1
 --|--|--|--|--|--|--
-oldCh指针           |   |   |   | ↓↓ |
-oldCh               | 1 | 2 | 3 | 4 |
-newCh               | 5 | 2 | 6 | 3 | 1
-newCh指针           |   |   | ↑ | ↑ |
+oldCh指针           |   |   |   | ↓↓ |   |
+oldCh               | 1 | 2 | 3 | 4 |   |
+newCh               | 5 | 2 | 6 | 3 | 1 |
+newCh指针           |   |   | ↑ | ↑ |   |
 
 这样，我们就完成了整一个updateChildren的过程，parentElm.children已经变成了与newCh相对应了。整一个patch的递归完成后，vnode.elm就变成全新的elm了，视图也就更新完毕啦。
