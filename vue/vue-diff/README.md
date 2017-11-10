@@ -330,11 +330,67 @@ function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly
 
 文字描述还是有点比较难理解，用图例来进一步解释。
 
-parentElm.children | 1 | 2 | 3 | 4 | -
---|--|--|--|--|-- 
-oldCh指针  | ↓ |   |   | ↓ | 
-oldCh | 1 | 2 | 3 | 4 | 
-newCh | 5 | 3 | 6 |  2 | 1 
-newCh指针 | ↑ |  |  | ↑ | 
+首先，假设我们的oldCh有四个节点，用数字表示，分别为1、2、3、4，newCh无个节点，分别为5、2、6、3、1。由于parentElm.children是根据oldCh生成的，所以也有四个节点1、2、3、4。oldCh的头尾指针分别指向1和4，newCh的头尾指针分别指向5、1。
 
-首先，假设我们的oldCh有四个节点，用数字表示，分别为1、2、3、4，newCh也有四个节点，分别为5、6、3、1。由于parentElm.children是根据oldCh生成的，所以也有四个节点1、2、3、4。oldCh的头尾指针分别指向1和4，newCh的头尾指针分别指向5、
+parentElm.children | 1 | 2 | 3 | 4 | -
+--|--|--|--|--|--
+oldCh指针           | ↓ |   |   | ↓ |
+oldCh               | 1 | 2 | 3 | 4 |
+newCh               | 5 | 2 | 6 | 3 | 1
+newCh指针           | ↑ |   |   |   | ↑
+
+根据上面我们说到的updateChildren的判断过程，判断到oldCh的头节点和newCh的尾节点相同，于是就将parentElm.children中的oldCh头节点移动到oldCh尾节点后面。然后oldCh跟newCh的指针分别移动，于是就变成了下面这样。
+
+parentElm.children | 2 | 3 | 4 | 1 | -
+--|--|--|--|--|--
+oldCh指针           |   | ↓ |   | ↓ |
+oldCh               | 1 | 2 | 3 | 4 |
+newCh               | 5 | 2 | 6 | 3 | 1
+newCh指针           | ↑ |   |   | ↑ |
+
+继续进行循环判断，发现头尾的节点都没有相同的，这个时候我们就要去oldCh中根据key找与newCh头节点相同的节点。但是没有找到，所以我们会创建一个新的节点插入到parentElm.children中头节点前面，然后指针移动。结果如下。
+
+parentElm.children | 5 | 2 | 3 | 4 | 1
+--|--|--|--|--|--
+oldCh指针           |   | ↓ |   | ↓ |
+oldCh               | 1 | 2 | 3 | 4 |
+newCh               | 5 | 2 | 6 | 3 | 1
+newCh指针           |   | ↑ |   | ↑ |
+
+继续进行循环。发现头节点相同，无需移动，直接对头节点进行patch，指针移动。结果如下。
+
+parentElm.children | 5 | 2 | 3 | 4 | 1
+--|--|--|--|--|--
+oldCh指针           |   |   | ↓ | ↓ |
+oldCh               | 1 | 2 | 3 | 4 |
+newCh               | 5 | 2 | 6 | 3 | 1
+newCh指针           |   |   | ↑ | ↑ |
+
+继续进行循环。发现newCh尾节点和oldCh头节点相同，将parentElm.children中的3节点移动到parentElm.children的尾指针后面，指针移动。结果如下。
+
+parentElm.children | 5 | 2 | 4 | 3 | 1
+--|--|--|--|--|--
+oldCh指针           |   |   |   | ↓↓ |
+oldCh               | 1 | 2 | 3 | 4 |
+newCh               | 5 | 2 | 6 | 3 | 1
+newCh指针           |   |   | ↑↑ |   |
+
+现在两个头尾指针都相等了，但还是符合循环的条件，于是继续进行循环。由于两个节点不相同，于是会创建一个新的节点插入到parentElm.children的头指针前面，指针移动。结果如下。
+
+parentElm.children | 5 | 2 | 6 | 4 | 3 | 1
+--|--|--|--|--|--|--
+oldCh指针           |   |   |   | ↓↓ |
+oldCh               | 1 | 2 | 3 | 4 |
+newCh               | 5 | 2 | 6 | 3 | 1
+newCh指针           |   |   | ↑ | ↑ |
+
+这样之后`newStartIdx > newEndIdx`，循环结束。因为`newStartIdx > newEndIdx`,意味着parentElm.children中可能还有多余的节点，我们再调用`removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx)`将多余的节点移除。结果如下。
+
+parentElm.children | 5 | 2 | 6 | 3 | 1
+--|--|--|--|--|--|--
+oldCh指针           |   |   |   | ↓↓ |
+oldCh               | 1 | 2 | 3 | 4 |
+newCh               | 5 | 2 | 6 | 3 | 1
+newCh指针           |   |   | ↑ | ↑ |
+
+这样，我们就完成了整一个updateChildren的过程，parentElm.children已经变成了与newCh相对应了。整一个patch的递归完成后，vnode.elm就变成全新的elm了，视图也就更新完毕啦。
