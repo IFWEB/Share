@@ -330,7 +330,7 @@ function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly
 
 文字描述还是有点比较难理解，用图例来进一步解释。
 
-parentElm.children | 1 | 2 | 3 | 4 | 
+parentElm.children | 1 | 2 | 3 | 4 | -
 --|--|--|--|--|-- 
 oldCh指针  | ↓ |   |   | ↓ | 
 oldCh | 1 | 2 | 3 | 4 | 
