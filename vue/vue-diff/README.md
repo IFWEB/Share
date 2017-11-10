@@ -327,3 +327,13 @@ function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly
 经过这样的一个过程之后，parentElm.children就变成了与newCh相对应了。
 
 总的来说，updateChildren的作用是根据newCh生成相应的parentElm.children，同时尽量复用其中的节点。所以对于每一个newCh的节点，会先在oldCh中找相应的节点，找到了就将其移动到parentElm.children中与newCh对应的位置，没找到就创建一个新的节点插入到对应的位置。最后将parentElm.children中多余的节点移除或者将newCh中还未添加到parentElm.children中的节点添加上去。
+
+文字描述还是有点比较难理解，用图例来进一步解释。
+
+parentElm.children | 1 | 2 | 3 | 4
+--|--|--|--|--
+oldCh指针  | ↓ |   |   | ↓
+oldCh | 1 | 2 | 3 | 4
+newCh | 5 | 6 | 3 | 1
+newCh指针 | ↑ |  |  | ↑
+
