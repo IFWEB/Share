@@ -314,7 +314,7 @@ function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly
 1. 如果以上判断都不满足，我们就直接通过key去寻找oldCh中与newStartVnode相对应的vnode。
     1. 如果没找到对应的vnode，意味着这是一个新的节点，我们通过`createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm)`创建一个新的DOM节点并插入到oldStartVnode.elm前面。
     1. 如果找到了oldCh中对应的vnode，我们用elmToMove将这个vnode保存起来，通过递归调用patchVnode对这个vnode跟newStartVnode进行对比，然后将oldCh中对应的vnode设为undefined，同时通过`nodeOps.insertBefore(parentElm, elmToMove.elm, oldStartVnode.elm)`将elmToMove.elm移动到oldStartVnode.elm前面。可以看到，我们将这个节点设为了undefined，这样当指针移动到这里的时候发现是undefined就会继续移动，因为这个节点已经被复用了，这个就是上面第2步判断的作用。
-1. 当不再满足oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx时，循环结束。这时候我们就要判断到底是`oldStartIdx > oldEndIdx`还是`newStartIdx > newEndIdx`。
+1. 当不再满足`oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx`时，循环结束。这时候我们就要判断到底是`oldStartIdx > oldEndIdx`还是`newStartIdx > newEndIdx`。
     1. 如果`oldStartIdx > oldEndIdx`，因为只有当oldCh中的节点被复用时，oldCh的指针才会移动，当oldCh的头指针大于尾指针时，意味着oldCh已经没有节点可以被复用了，这样我们就需要直接将newCh中还未添加到parentElm.children的节点通过`addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue)`添加到parentElm.children中。
     1. 如果`newStartIdx > newEndIdx`，意味着newCh中的所有节点都已经在parentElm.children中了，也就意味着OldCh中如果oldStartIdx到oldEndIdx之间（包括oldStartIdx和oldEndIdx）指针所指向的节点在newCh中没有对应的节点，也就是说剩下的都是多余的节点，所以我们需要通过`removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx)`将多余的节点都移除。
 
