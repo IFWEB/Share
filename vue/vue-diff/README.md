@@ -324,7 +324,7 @@ function updateChildren (parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly
 
 文字描述还是有点比较难理解，用图例来进一步解释。
 
-首先，假设我们的oldCh有四个节点，用数字表示，分别为1、2、3、4，newCh无个节点，分别为5、2、6、3、1。由于parentElm.children是根据oldCh生成的，所以也有四个节点1、2、3、4。oldCh的头尾指针分别指向1和4，newCh的头尾指针分别指向5、1。
+首先，假设我们的oldCh有四个节点，用数字表示，分别为1、2、3、4，newCh五个节点，分别为5、2、6、3、1。由于parentElm.children是根据oldCh生成的，所以也有四个节点1、2、3、4。oldCh的头尾指针分别指向1和4，newCh的头尾指针分别指向5、1。
 
 parentElm.children | 1 | 2 | 3 | 4 | -
 --|--|--|--|--|--
