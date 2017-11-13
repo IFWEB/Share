@@ -41,13 +41,10 @@ Vue.prototype._update = function(vnode: VNode, hydrating ? : boolean) {
 
 ( 这里我们就将一些不太重要的代码忽略掉不讲了， 比如callHook调用钩子函数之类的， 我们只关注实现DOM更新相关代码。)
 
-这里面最重要的代码就是通过 `vm.__patch__`
-进行DOM更新。 如果之前没有渲染过， 就直接调用 `vm.__patch__`
-生成真正的DOM并将生成的DOM挂载到vm.$el上， 否则会调用 `vm.__patch__(prevVnode, vnode)`
+这里面最重要的代码就是通过 `vm.__patch__`进行DOM更新。 如果之前没有渲染过， 就直接调用 `vm.__patch__`生成真正的DOM并将生成的DOM挂载到vm.$el上， 否则会调用 `vm.__patch__(prevVnode, vnode)`
 将当前vnode与之前的vnode进行diff比较， 最小化更新。
 
-接下来我们就看一下这个最重要的 `vm.__patch__`
-到底做了些什么。
+接下来我们就看一下这个最重要的 `vm.__patch__`到底做了些什么。
 
 ```javascript
 //摘自platforms\web\runtime\patch.js
@@ -128,12 +125,9 @@ if (!prevVnode) {
 }
 ```
 
-如果没有prevVnode（也就是第一次渲染）， 这时vm.$el如果为undefined则满足 `isUndef(oldVnode)`，
-会调用createElm函数； 如果vm.$el存在， 但其不满足 `sameVnode(oldVnode, vnode)`，
-同样会调用createElm函数。 也就是说如果是首次渲染，就会调用createElm函数创建新的DOM。
+如果没有prevVnode（也就是第一次渲染）， 这时vm.$el如果为undefined则满足 `isUndef(oldVnode)`，会调用createElm函数； 如果vm.$el存在， 但其不满足 `sameVnode(oldVnode, vnode)`，同样会调用createElm函数。 也就是说如果是首次渲染，就会调用createElm函数创建新的DOM。
 
-如果有prevVnode（也就是进行视图的更新）， 这时如果满足 `sameVnode(oldVnode, vnode)`（
-即vnode相同）， 则会调用patchVnode对vnode进行更新； 如果vnode不相同， 则会调用createElm函数创建新的DOM节点替换掉原来的DOM节点。
+如果有prevVnode（也就是进行视图的更新）， 这时如果满足 `sameVnode(oldVnode, vnode)`（即vnode相同）， 则会调用patchVnode对vnode进行更新； 如果vnode不相同， 则会调用createElm函数创建新的DOM节点替换掉原来的DOM节点。
 
 那么接下来分别看看这两个函数。
 
