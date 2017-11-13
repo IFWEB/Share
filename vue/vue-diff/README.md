@@ -103,7 +103,7 @@ return function patch (oldVnode, vnode, hydrating, removeOnly, parentElm, refElm
 
 在这个返回的patch函数里， 会进行许多的判断：
 
-1. 判断vnode和oldVnode是否isDef（ 即非undefined且非null， 下面简称已定义）， 若vnode已定义且oldVnode未定义， 没有新的vnode就意味着要将组件销毁掉， 就会循环调用invokeDestroyHook函数将oldVnode销毁掉。
+1. 判断vnode和oldVnode是否isDef（ 即非undefined且非null， 下面简称已定义）， 若vnode未定义且oldVnode已定义， 没有新的vnode就意味着要将组件销毁掉， 就会循环调用invokeDestroyHook函数将oldVnode销毁掉。
 1. 如果oldVnode未定义， 意味着这是第一次patch， 就会调用 `createElm(vnode, insertedVnodeQueue, parentElm, refElm)`创建一个新的DOM。
 1. 如果oldVnode跟vnode是同一个vnode， 且oldVnode.nodeType未定义， 就调用 `patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly)`来更新oldVnode并生成新的DOM。( 这里判断nodeType是否定义是因为vnode是没有nodeType的， 当进行服务端渲染时会有nodeType， 这样可以排除掉服务端渲染的情况。 )
 1. 如果oldVnode跟vnode不同， 会调用createElm函数来创建新的DOM来替换掉原来的DOM。
