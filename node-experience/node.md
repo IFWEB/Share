@@ -1,5 +1,5 @@
 ### node post请求ECONNRESET
-当前端是post请求但是body中没有设置任何参数时，后台会抛出异常如下
+当前端是post请求但是body中没有设置任何参数时，node去请求23服务器的'/newconsole/consoleapi/isLogin'接口会抛出异常如下
 ```
 reqest /newconsole/consoleapi/selectRechargeInfo error
 { Error: socket hang up
@@ -12,3 +12,4 @@ reqest /newconsole/consoleapi/selectRechargeInfo error
     at process._tickCallback (internal/process/next_tick.js:180:9) code: 'ECONNRESET' }
 
 ```
+目前没有找到抛出异常的根本原因。
