@@ -12,4 +12,4 @@ reqest /newconsole/consoleapi/selectRechargeInfo error
     at process._tickCallback (internal/process/next_tick.js:180:9) code: 'ECONNRESET' }
 
 ```
-目前没有找到抛出异常的根本原因。需要后台一起协助查看问题
+具体原因是请求/newconsole/consoleapi/selectRechargeInfo经过node-master将请求的某些东西更改了，然后在更改的上下文环境下再去请求23服务器的'/newconsole/consoleapi/isLogin'请求抛错。如果直接访问node-console的/newconsole/consoleapi/selectRechargeInfo接口则不会有次问题
