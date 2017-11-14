@@ -21,17 +21,17 @@ public class CRechargeQueryDto extends RechargeBaseDto{
 	...
 }
 ```
-传递page的时候有两种传递方式
+传递cRechargeQueryDto的时候有两种传递方式
 ```
 //第一种，每一个数据类型都转换
 Java('com.njq.nongfadai.dto.funds.CRechargeQueryDto', {
-	serialNum: Java.String(serialNum),
-	userName: Java.String(userName)
+	serialNum: Java.String(param.serialNum),
+	userName: Java.String(param.userName)
 })
 
 //第二种，内部的简单类型不用转换
 Java('com.njq.nongfadai.dto.funds.CRechargeQueryDto', {
-	serialNum: serialNum,
-	userName: userName
+	serialNum: param.serialNum,
+	userName: param.userName
 })
 ```
