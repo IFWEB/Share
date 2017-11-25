@@ -14,4 +14,4 @@
 - [如何让node实现的后台和java实现的后台同时在线上运行](https://github.com/IFWEB/Share/tree/master/node-experience/node-java-coexist.md)  
 - [js-to-java使用的一些坑](https://github.com/IFWEB/Share/tree/master/node-experience/js-to-java.md)  
 - [ECONNRESET](https://github.com/IFWEB/Share/blob/master/node-experience/node-ECONNRESET.md)
-- [shll脚本执行报错](https://github.com/IFWEB/Share/blob/master/node-experience/shellExperience.md)
+- [shell脚本执行报错](https://github.com/IFWEB/Share/blob/master/node-experience/shellExperience.md)
