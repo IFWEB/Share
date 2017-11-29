@@ -15,3 +15,4 @@
 - [js-to-java使用的一些坑](https://github.com/IFWEB/Share/tree/master/node-experience/js-to-java.md)  
 - [ECONNRESET](https://github.com/IFWEB/Share/blob/master/node-experience/node-ECONNRESET.md)
 - [shell脚本执行报错](https://github.com/IFWEB/Share/blob/master/node-experience/shellExperience.md)
+- [node_redis踩坑总结](https://github.com/IFWEB/Share/blob/master/node-experience/shellExperience.md)
