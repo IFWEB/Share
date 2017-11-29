@@ -1,0 +1,4 @@
+node_redis使用踩坑
+
+- 使用node_redis存储hash表时，对象中的值不能包含null,否则会报警告
+- 使用node_redis存储set集合时，数组不能为空，否值会报错
