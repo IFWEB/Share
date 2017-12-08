@@ -18,3 +18,6 @@
 - [Vue组件渲染机制](https://github.com/IFWEB/Share/tree/master/vue/vue-render)
 - [Vue-render函数](https://github.com/IFWEB/Share/tree/master/vue/vue-render-function)
 - [Vue-Router](https://github.com/IFWEB/Share/tree/master/vue/vue-router)
+
+### Webpack分享
+- [CommonsChunkPlugin](https://github.com/IFWEB/Share/tree/master/webpack/CommonsChunkPlugin)
