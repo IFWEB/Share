@@ -6,7 +6,7 @@ CommonsChunkPlugin是一个用于将多个入口chunk中的公共模块提取出
 
 1. `name/names`：这个是common chunk的名称，如果是一个已经存在的入口chunk的名称，则可以将该chunk作为一个common chunk去包含其他公共模块。如果是names选项则相当于对每个name调用一次CommonChunkPlugin。
 1. `filename`：这个是common chunk的文件名。
-1. `minChunks`：公共模块要打包到common chunk中需要至少多少个入口chunk共同进行了引用。比如说我们现在有三个入口chunk：index、iconfont、login，三个入口chunk都引用了vue.js，index和login引用了vue-router.js。如果minChunks设为3的话，就只有vue.js会被打包到common chunk中，如果minChunks设为2的话，则vue.js和vue-router.js都会被打包到common chunk中。同时如果minChunks设为'Infinity'，则没有公共模块会被打包到common chunk中。如果忽略的话则所有被选择的trunk都共同引用的模块才会被打包。
+1. `minChunks`：公共模块要打包到common chunk中需要至少多少个入口chunk共同进行了引用。比如说我们现在有三个入口chunk：index、iconfont、login，三个入口chunk都引用了vue.js，index和login引用了vue-router.js。如果minChunks设为3的话，就只有vue.js会被打包到common chunk中，如果minChunks设为2的话，则vue.js和vue-router.js都会被打包到common chunk中。同时如果minChunks设为'Infinity'，则没有公共模块会被打包到common chunk中。如果忽略的话则所有被选择的chunk都共同引用的模块才会被打包。
 1. `chunks`：需要提取公共模块的入口chunk，如果忽略该选项，则所有入口chunk都会被选择。
 1. `children`：如果设为true，则所有被选择的入口chunk的子chunk也会被选择。子chunk中的公共模块会被打包到父chunk中，这样可以减少子chunk中的重复代码。
 1. `async`：如果设为true，子chunk中的公共模块不会被打包到父chunk中，而是会被打包到一个异步的common chunk中，和入口chunk并行加载。
@@ -22,8 +22,8 @@ CommonsChunkPlugin是一个用于将多个入口chunk中的公共模块提取出
 
 ## name选项的配置
 
-### name选项不为入口trunk
-我们试着将这些第三方模块（包括非公共模块）提取到一个common chunk中。将name选项设为common，这样公共模块就会被打包到一个新的名为common的trunk中。
+### name选项不为入口chunk
+我们试着将这些第三方模块（包括非公共模块）提取到一个common chunk中。将name选项设为common，这样公共模块就会被打包到一个新的名为common的chunk中。
 
 ```javascript
 new webpack.optimize.CommonsChunkPlugin({
@@ -35,7 +35,7 @@ new webpack.optimize.CommonsChunkPlugin({
 
 可以看到，三个入口chunk公用的一些模块都被打包到名为common的chunk中。
 
-### name选项为入口trunk
+### name选项为入口chunk
 
 首先我们添加一个入口chunk：
 
@@ -56,7 +56,7 @@ new webpack.optimize.CommonsChunkPlugin({
 
 ![image](https://github.com/IFWEB/Share/blob/master/webpack/CommonsChunkPlugin/assets/pic2.jpg)
 
-由于我们没有配置minChunks选项，也就意味着所有三个入口trunk都引用的公共模块才会被打包进vendor包中。
+由于我们没有配置minChunks选项，也就意味着所有三个入口chunk都引用的公共模块才会被打包进vendor包中。
 
 ### minChunks的配置
 
@@ -65,12 +65,12 @@ new webpack.optimize.CommonsChunkPlugin({
 ```javascript
 new webpack.optimize.CommonsChunkPlugin({
     name:'vendor',
-    minChunks:2//两个以上被选择的trunk共同引用的模块才会被打包到vendor包中
+    minChunks:2//两个以上被选择的chunk共同引用的模块才会被打包到vendor包中
 })
 ```
 
 ![image](https://github.com/IFWEB/Share/blob/master/webpack/CommonsChunkPlugin/assets/pic3.jpg)
 
-这样之后可以发现index和login入口trunk所共用而iconfont没有的一些引用文件也被打包进了vendor包中。
+这样之后可以发现index和login入口chunk所共用而iconfont没有的一些引用文件也被打包进了vendor包中。
 
-如果我们将minChunks选项设为'Infinity'的话，公共模块就算被所有入口trunk都引用了，也不会被打包到vendor包中，vendor包中只会包含vendor入口chunk。
+如果我们将minChunks选项设为'Infinity'的话，公共模块就算被所有入口chunk都引用了，也不会被打包到vendor包中，vendor包中只会包含vendor入口chunk。
