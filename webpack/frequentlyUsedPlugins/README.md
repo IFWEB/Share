@@ -127,4 +127,45 @@ new webpack.DllReferencePlugin({
 })
 ```
 
-然后在webpack配置文件中添加DllReferencePlugin插件，将manifest传给DllReferencePlugin插件。最后通过add-asset-html-webpack-plugin将vendor.dll.js插入到html中。
+然后在webpack配置文件中添加DllReferencePlugin插件，将manifest传给DllReferencePlugin插件。最后通过add-asset-html-webpack-plugin将vendor.dll.js插入到html中。然而使用后打包速度并没有提高多少，而且会报`$ is not defined`错误。在开发环境我们有了HMR增量打包速度非常快，一秒之内就能完成，而生产环境的速度也没有特别慢，其实也不太需要使用这个插件。
+
+### server与HotModuleReplacement
+我们知道使用webpack-dev-server可以开启一个简单的web服务器，但是如果我们需要实现更多的需求，可以使用express配合webpack-dev-middleware来开启服务器。
+
+```javascript
+//使用webpack-dev-server开启服务器
+const webpack=require('webpack');
+const WebpackDevServer=require('webpack-dev-server');
+const config=require('./webpack.dev.js');
+const compiler=webpack(config);
+
+var server=new WebpackDevServer(compiler,{
+  hot:true,
+  publicPath:'/static/'
+});
+
+server.listen(3000, "0.0.0.0");
+```
+
+```javascript
+//使用express开启服务器
+const webpack=require('webpack');
+const express=require('express');
+const WebpackDevMiddleware=require('webpack-dev-middleware');
+const WebpackHotMiddleware=require('webpack-hot-middleware');
+const app=express();
+const config=require('./webpack.dev.js');
+const compiler=webpack(config);
+
+app.use(WebpackDevMiddleware(compiler,{
+    publicPath:config.output.publicPath
+}));
+
+app.use(WebpackHotMiddleware(compiler))
+
+app.listen(3000, function() {
+  console.log("Example app listening on port 3000!\n");
+});
+```
+
+如上，通过webpack-dev-server或者webpack-dev-middleware配合express开启服务器都比较简单。webpack-dev-server配置hot为true然后在webpack配置中加上HotModuleReplacementPlugin就能开启HotModuleReplacement（模块热重载）了。express开启热重载会稍微麻烦一些，首先我们要将webpack-dev-middleware中间件传给express，然后在webpack配置中给每个需要开启HMR的entry加上`webpack-hot-middleware/client?path=/__webpack_hmr`，没有加上这个client的entry是不会有热重载的。这个client会连接到server，当重新打包时，它会告诉server去进行更新。
