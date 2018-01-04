@@ -43,24 +43,36 @@ webpack的loader在处理文件时是通过单线程来进行处理的，happypa
 
 ```javascript
 const HappyPack = require('happypack');
+const happyThreadPool = HappyPack.ThreadPool({ size: 2 });
 
 exports.module = {
-  rules: [
-    {
-      test: /.js$/,
-      use: 'happypack/loader'
-    }
-  ]
+    rules: [
+        {
+            test: /\.js$/,
+            loader: 'happypack/loader?id=js'
+        },
+        {
+            test: /\.css$/,
+            loader: 'happypack/loader?id=css'
+        }
+    ]
 };
 
 exports.plugins = [
-  new HappyPack({
-    loaders: [ 'babel-loader?presets[]=es2015' ]
-  })
+    new HappyPack({
+        id: 'js',
+        loaders: ['babel-loader'],
+        threadPool: happyThreadPool
+    }),
+    new HappyPack({
+        id: 'css',
+        loaders: ['style-loader', 'css-loader'],
+        threadPool: happyThreadPool
+    })
 ];
 ```
 
-像上面这样，我们就可以通过happypack来并行处理文件了。实测之后发现对打包速度并没有太大的提升(￣.￣)，似乎要配合DllPlugin一起使用效果才会比较好。
+像上面这样，我们就可以通过happypack来并行处理文件了，通过id可以指定不同的happypack对文件进行处理。当我们使用多个happypack时，我们可以让所有的happypack使用一个共享的线程池以提高效率。实测之后发现对打包速度并没有太大的提升(￣.￣)，可能是电脑只有双核的缘故。
 
 ### webpack-parallel-uglify-plugin
 webpack自带的uglifyJS插件是串行地处理输出文件的，而且uglify的速度是非常慢的，所有会占用比较多的时间。webpack-parallel-uglify-plugin可以让我们并行地去处理输出文件，对于每一个cpu会启用一个线程进行处理。可以说效果是非常明显的，在我的双核电脑上打包时间缩短了三分之一。
@@ -122,8 +134,11 @@ module.exports = {
 //webpack.dev.conf.js
 new webpack.DllReferencePlugin({
     context: __dirname,
-    manifest: require("/vendor-manifest.json"),
-    scope: "vendor"
+    manifest: require("./vendor-manifest.json")
+}),
+new AddAssetHtmlPlugin({
+    filepath: path.resolve(__dirname, 'vendor.dll.js'),
+    includeSourcemap: false
 })
 ```
 
