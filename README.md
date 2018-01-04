@@ -21,3 +21,5 @@
 
 ### Webpack分享
 - [CommonsChunkPlugin](https://github.com/IFWEB/Share/tree/master/webpack/CommonsChunkPlugin)
+- [webpack常用插件](https://github.com/IFWEB/Share/tree/master/webpack/frequentlyUsedPlugins)
+- [webpack中的各种路径总结](https://github.com/IFWEB/Share/tree/master/webpack/paths)
